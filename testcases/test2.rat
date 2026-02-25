@@ -1,0 +1,27 @@
+@
+/* test2.rat */
+function add(x integer)
+{
+    return x
+}
+@
+integer a, b;
+real c;
+@
+a = 1;
+b = 2;
+c = a + b;
+b = a + c;
+write(a);
+write(b);
+write(c);
+
+if (a == b)
+    write(c);
+fi
+
+while (c < 10)
+{
+    c = c + 1;
+}
+@
