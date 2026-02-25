@@ -1,0 +1,12 @@
+@
+function multiply(a integer, b integer);
+{
+    integer c;
+    read(a, b);
+    c = a * b;
+    write(c);
+}
+/* This is test number 3 */
+@
+@
+@
