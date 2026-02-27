@@ -138,10 +138,10 @@ def run_lexer(input_path: str, output_path: str):
         out.write(f"{'-'*15} {'-'*20}\n")
 
         while True:
-            tok = lexer.next_token()
-            if tok.type == "eof":
+            token = lexer.next_token()
+            if token.type == "eof":
                 break
-            out.write(f"{tok.type:<15} {tok.lexeme}\n")
+            out.write(f"{token.type:<15} {token.lexeme}\n")
 
 inputFile = input("Please enter the input Rat26S source code file: ")
 outputFile = input("Please enter the output destination: ")
