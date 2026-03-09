@@ -143,8 +143,60 @@ def run_lexer(input_path: str, output_path: str):
                 break
             out.write(f"{token.type:<15} {token.lexeme}\n")
 
+class parser:
+    def __init__(self, lexer, show_productions=True):
+        self.lexer = lexer
+        self.current_token = self.lexer.next_token()
+        self.show_productions = show_productions
+    def match(self, token):
+        if self.current_token.lexeme == token or self.current_token.type == token:
+            self.current_token = self.lexer.next_token()
+        else:
+            raise SyntaxError(f"Expected {token} but got {self.current_token.type} {self.current_token.lexeme}")
+
+    def expression(self):
+        if self.show_productions:
+            print("R25. <Expression> ::= <Term> <Expression'>\n")
+        self.term()
+        self.expression_prime()
+        
+    def expression_prime(self):
+        if self.current_token.lexeme == '+':
+            self.match('+')
+            self.term()
+            self.expression_prime()
+        elif self.current_token.lexeme == '-':
+            self.match('-')
+            self.term()
+            self.expression_prime()
+        else:
+            pass
+        
+    def term(self):
+        if self.show_productions:
+            print("R26. <Term> ::= <Factor> <Term'>\n")
+        
+        self.term_prime()
+        
+    def term_prime(self):
+        if self.current_token.lexeme == '*':
+            self.match('*')
+            
+            self.term_prime()
+        elif self.current_token.lexeme == '/':
+            self.match('/')
+            
+            self.term_prime()
+        else:
+            pass
+        
+
+            
+
 inputFile = input("Please enter the input Rat26S source code file: ")
 outputFile = input("Please enter the output destination: ")
 
 run_lexer(inputFile, outputFile)
+parse = parser(Lexer(open(inputFile, "r").read()), show_productions=True)
+parse.expression()
 print("Done.")
