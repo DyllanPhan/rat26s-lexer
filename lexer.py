@@ -154,6 +154,217 @@ class parser:
         else:
             raise SyntaxError(f"Expected {token} but got {self.current_token.type} {self.current_token.lexeme}")
 
+    def Rat26s(self):
+        if self.show_productions:
+            print("R1. <Rat26S> ::= @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @\n")
+        self.match('@')
+        self.opt_function_definitions()
+        self.match('@')
+        self.opt_declaration_list()
+        self.match('@')
+        self.statement_list()
+        self.match('@')
+        
+    def opt_function_definitions(self):
+        if self.show_productions:
+            print("R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>\n")
+        if self.current_token.lexeme == "function":
+            self.function_definitions()
+        else:
+            pass
+    
+    def function_definitions(self):
+        if self.show_productions:
+            print("R3. <Function Definitions> ::= <Function> | <Function> <Function Definitions>\n")
+        self.function()
+        if self.current_token.lexeme == "function":
+            self.function_definitions()
+        
+    def function(self):
+        if self.show_productions:
+            print("R4. <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>\n")
+        self.match("function")
+        self.match("identifier")
+        self.match('(')
+        self.opt_parameter_list()
+        self.match(')')
+        self.opt_declaration_list()
+        self.body()
+        
+    def opt_parameter_list(self):
+        if self.show_productions:
+            print("R5. <Opt parameter List> ::= <Parameter List> | <Empty>\n")
+        if self.current_token.type == "identifier":
+            self.parameter_list()
+        else:
+            pass
+        
+    def parameter_list(self):
+        if self.show_productions:
+            print("R6. <Parameter List> ::= <Parameter> | <Parameter> , <Parameter List>\n")
+        self.parameter()
+        if self.current_token.lexeme == ',':
+            self.match(',')
+            self.parameter_list() 
+    
+    def parameter(self):
+        if self.show_productions:
+            print("R7. <Parameter> ::= <IDS> <Qualifier>\n")
+        self.ids()
+        self.qualifier()
+    
+    def qualifier(self):
+        if self.show_productions:
+            print("R8. <Qualifier> ::= integer | boolean | real\n")
+        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+            self.match(self.current_token.lexeme)
+        else:
+            raise SyntaxError(f"Expected a type but got {self.current_token.type} {self.current_token.lexeme}")
+        
+    def body(self):
+        if self.show_productions:
+            print("R9. <Body> ::= { <Statement List> }\n")
+        self.match('{')
+        self.statement_list()
+        self.match('}')
+    
+    def opt_declaration_list(self):
+        if self.show_productions:
+            print("R10. <Opt Declaration List> ::= <Declaration List> | <Empty>\n")
+        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+            self.declaration_list()
+        else:
+            pass
+        
+    def declaration_list(self):
+        if self.show_productions:
+            print("R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>\n")
+        self.declaration()
+        self.match(';')
+        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+            self.declaration_list()
+        
+    def declaration(self):
+        if self.show_productions:
+            print("R12. <Declaration> ::= <Qualifier> <IDS>\n")
+        self.qualifier()
+        self.ids()
+        
+    def ids(self):
+        if self.show_productions:
+            print("R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>\n")
+        self.match("identifier")
+        if self.current_token.lexeme ==',':
+            self.match(',')
+            self.ids()
+    
+    def statement_list(self):
+        if self.show_productions:
+            print("R14. <Statement List> ::= <Statement> | <Statement> <Statement List>\n")
+        self.statement()
+        if self.current_token.lexeme in {"{", "if", "return", "write", "read", "while"} or self.current_token.type == "identifier":
+            self.statement_list()
+            
+    def statement(self):
+        if self.show_productions:
+            print("R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>\n")
+        if self.current_token.lexeme == '{':
+            self.compound()
+        elif self.current_token.type == "identifier":
+            self.assign()
+        elif self.current_token.lexeme == "if":
+            self.if_production()
+        elif self.current_token.lexeme == "return":
+            self.return_production()
+        elif self.current_token.lexeme == "write":
+            self.print_production()
+        elif self.current_token.lexeme == "read":
+            self.scan_production()
+        elif self.current_token.lexeme == "while":
+            self.while_production()
+        else:
+            raise SyntaxError(f"Unexpected token {self.current_token.type} {self.current_token.lexeme}")
+
+    def compound(self):
+        if self.show_productions:
+            print("R16. <Compound> ::= { <Statement List> }\n")
+        self.match('{')
+        self.statement_list()
+        self.match('}')
+    
+    def assign(self):
+        if self.show_productions:
+            print("R17. <Assign> ::= <Identifier> = <Expression> ;\n")
+        self.match("identifier")
+        self.match('=')
+        self.expression()
+        self.match(';')
+        
+    def if_production(self):
+        if self.show_productions:
+            print("R18. <If> ::= if ( <Condition> ) <Statement> fi | if ( <Condition> ) <Statement> otherwise <Statement> fi\n")
+        self.match("if")
+        self.match('(')
+        self.condition()
+        self.match(')')
+        self.statement()
+        if self.current_token.lexeme == "otherwise":
+            self.match("otherwise")
+            self.statement()
+        self.match("fi")
+            
+    def return_production(self):
+        if self.show_productions:
+            print("R19. <Return> ::= return ; | return <Expression> ;\n")
+        self.match("return")
+        if self.current_token.lexeme == ';':
+            self.match(';')
+        else:
+            self.expression()
+            self.match(';')
+
+    def print_production(self):
+        if self.show_productions:
+            print("R20. <Print> ::= write ( <Expression> ) ;\n")
+        self.match("write")
+        self.match('(')
+        self.expression()
+        self.match(')')
+        self.match(';')
+
+    def scan_production(self):
+        if self.show_productions:
+            print("R21. <Scan> ::= read ( <IDS> ) ;\n")
+        self.match("read")
+        self.match('(')
+        self.ids()
+        self.match(')')
+        self.match(';')
+        
+    def while_production(self):
+        if self.show_productions:
+            print("R22. <While> ::= while ( <Condition> ) <Statement>\n")
+        self.match("while")
+        self.match('(')
+        self.condition()
+        self.match(')')
+        self.statement()
+        
+    def condition(self):
+        if self.show_productions:
+            print("R23. <Condition> ::= <Expression> <Relop> <Expression>\n")
+        self.expression()
+        self.relop()
+        self.expression()
+        
+    def relop(self):
+        if self.show_productions:
+            print("R24. <Relop> ::= == | != | > | < | <= | =>\n")
+        if self.current_token.lexeme in {"==", "!=", ">", "<", "<=", "=>"}:
+            self.match(self.current_token.lexeme)
+        else:
+            raise SyntaxError(f"Expected a relational operator but got {self.current_token.type} {self.current_token.lexeme}")
+
     def expression(self):
         if self.show_productions:
             print("R25. <Expression> ::= <Term> <Expression'>\n")
@@ -175,22 +386,49 @@ class parser:
     def term(self):
         if self.show_productions:
             print("R26. <Term> ::= <Factor> <Term'>\n")
-        
+        self.factor()
         self.term_prime()
         
     def term_prime(self):
         if self.current_token.lexeme == '*':
             self.match('*')
-            
+            self.factor()
             self.term_prime()
         elif self.current_token.lexeme == '/':
             self.match('/')
-            
+            self.factor()
             self.term_prime()
         else:
             pass
         
-
+    def factor(self):
+        if self.show_productions:
+            print("R27. <Factor> ::= - <Primary> | <Primary>\n")
+        if self.current_token.lexeme == '-':
+            self.match('-')
+            self.primary()
+        else:
+            self.primary()
+        
+    def primary(self):
+        if self.show_productions:
+            print("R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+        if self.current_token.type == "identifier":
+            self.match("identifier")
+            if self.current_token.lexeme == '(':
+                self.match('(')
+                self.ids()
+                self.match(')')
+        elif self.current_token.type in {"integer", "real"}:
+            self.match(self.current_token.type)
+        elif self.current_token.lexeme in {"true", "false"}:
+            self.match(self.current_token.lexeme)
+        elif self.current_token.lexeme == '(':
+            self.match('(')
+            self.expression()
+            self.match(')')
+        else:
+            raise SyntaxError(f"Unexpected token {self.current_token.type} {self.current_token.lexeme} in primary")
             
 
 inputFile = input("Please enter the input Rat26S source code file: ")
@@ -198,5 +436,5 @@ outputFile = input("Please enter the output destination: ")
 
 run_lexer(inputFile, outputFile)
 parse = parser(Lexer(open(inputFile, "r").read()), show_productions=True)
-parse.expression()
+parse.Rat26s()
 print("Done.")
