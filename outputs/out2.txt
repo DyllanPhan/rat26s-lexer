@@ -1,86 +1,213 @@
 token           lexeme
 --------------- --------------------
-separator       @
-keyword         function
-identifier      add
-separator       (
-identifier      x
-keyword         integer
-separator       )
-separator       {
-keyword         return
-identifier      x
-separator       ;
-separator       }
-separator       @
-keyword         integer
-identifier      a
-separator       ,
-identifier      b
-separator       ;
-keyword         real
-identifier      c
-separator       ;
-separator       @
-identifier      a
-operator        =
-integer         1
-separator       ;
-identifier      b
-operator        =
-integer         2
-separator       ;
-identifier      c
-operator        =
-identifier      a
-operator        +
-identifier      b
-separator       ;
-identifier      b
-operator        =
-identifier      a
-operator        +
-identifier      c
-separator       ;
-keyword         write
-separator       (
-identifier      a
-separator       )
-separator       ;
-keyword         write
-separator       (
-identifier      b
-separator       )
-separator       ;
-keyword         write
-separator       (
-identifier      c
-separator       )
-separator       ;
-keyword         if
-separator       (
-identifier      a
-operator        ==
-identifier      b
-separator       )
-keyword         write
-separator       (
-identifier      c
-separator       )
-separator       ;
-keyword         fi
-keyword         while
-separator       (
-identifier      c
-operator        <
-integer         10
-separator       )
-separator       {
-identifier      c
-operator        =
-identifier      c
-operator        +
-integer         1
-separator       ;
-separator       }
-separator       @
+R1. <Rat26S> ::= @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+Matched separator       @
+R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>
+R3. <Function Definitions> ::= <Function> | <Function> <Function Definitions>
+R4. <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>
+Matched keyword         function
+Matched identifier      add
+Matched separator       (
+R5. <Opt parameter List> ::= <Parameter List> | <Empty>
+R6. <Parameter List> ::= <Parameter> | <Parameter> , <Parameter List>
+R7. <Parameter> ::= <IDS> <Qualifier>
+R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
+Matched identifier      x
+R8. <Qualifier> ::= integer | boolean | real
+Matched keyword         integer
+Matched separator       )
+R10. <Opt Declaration List> ::= <Declaration List> | <Empty>
+R9. <Body> ::= { <Statement List> }
+Matched separator       {
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R19. <Return> ::= return ; | return <Expression> ;
+Matched keyword         return
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      x
+Matched separator       ;
+Matched separator       }
+Matched separator       @
+R10. <Opt Declaration List> ::= <Declaration List> | <Empty>
+R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>
+R12. <Declaration> ::= <Qualifier> <IDS>
+R8. <Qualifier> ::= integer | boolean | real
+Matched keyword         integer
+R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
+Matched identifier      a
+Matched separator       ,
+R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
+Matched identifier      b
+Matched separator       ;
+R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>
+R12. <Declaration> ::= <Qualifier> <IDS>
+R8. <Qualifier> ::= integer | boolean | real
+Matched keyword         real
+R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
+Matched identifier      c
+Matched separator       ;
+Matched separator       @
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R17. <Assign> ::= <Identifier> = <Expression> ;
+Matched identifier      a
+Matched operator        =
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched integer         1
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R17. <Assign> ::= <Identifier> = <Expression> ;
+Matched identifier      b
+Matched operator        =
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched integer         2
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R17. <Assign> ::= <Identifier> = <Expression> ;
+Matched identifier      c
+Matched operator        =
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      a
+Matched operator        +
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      b
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R17. <Assign> ::= <Identifier> = <Expression> ;
+Matched identifier      b
+Matched operator        =
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      a
+Matched operator        +
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      c
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R20. <Print> ::= write ( <Expression> ) ;
+Matched keyword         write
+Matched separator       (
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      a
+Matched separator       )
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R20. <Print> ::= write ( <Expression> ) ;
+Matched keyword         write
+Matched separator       (
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      b
+Matched separator       )
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R20. <Print> ::= write ( <Expression> ) ;
+Matched keyword         write
+Matched separator       (
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      c
+Matched separator       )
+Matched separator       ;
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R18. <If> ::= if ( <Condition> ) <Statement> fi | if ( <Condition> ) <Statement> otherwise <Statement> fi
+Matched keyword         if
+Matched separator       (
+R23. <Condition> ::= <Expression> <Relop> <Expression>
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      a
+R24. <Relop> ::= == | != | > | < | <= | =>
+Matched operator        ==
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      b
+Matched separator       )
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R20. <Print> ::= write ( <Expression> ) ;
+Matched keyword         write
+Matched separator       (
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      c
+Matched separator       )
+Matched separator       ;
+Matched keyword         fi
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R22. <While> ::= while ( <Condition> ) <Statement>
+Matched keyword         while
+Matched separator       (
+R23. <Condition> ::= <Expression> <Relop> <Expression>
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      c
+R24. <Relop> ::= == | != | > | < | <= | =>
+Matched operator        <
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched integer         10
+Matched separator       )
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R16. <Compound> ::= { <Statement List> }
+Matched separator       {
+R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
+R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R17. <Assign> ::= <Identifier> = <Expression> ;
+Matched identifier      c
+Matched operator        =
+R25. <Expression> ::= <Term> <Expression'>
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched identifier      c
+Matched operator        +
+R26. <Term> ::= <Factor> <Term'>
+R27. <Factor> ::= - <Primary> | <Primary>
+R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+Matched integer         1
+Matched separator       ;
+Matched separator       }
+Matched separator       @
