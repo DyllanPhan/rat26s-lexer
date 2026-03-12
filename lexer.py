@@ -138,14 +138,27 @@ class parser:
         self.output_file = output_file
     def match(self, token):
         if self.current_token.lexeme == token or self.current_token.type == token:
-            self.output_file.write(f"Matched {self.current_token.type:<15} {self.current_token.lexeme}\n")
+            self.output_file.write(f"Token: {self.current_token.type:<15} Lexeme: {self.current_token.lexeme}\n")
             self.current_token = self.lexer.next_token()
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Expected {token} but got {self.current_token.type} {self.current_token.lexeme}")
 
+    def first_opt_function_definitions(self):
+        return self.current_token.lexeme == "function"
+    
+    def first_opt_parameter_list(self):
+        return self.current_token.type == "identifier"
+
+    def first_qualifier(self):
+        return self.current_token.lexeme in {"integer", "boolean", "real"}
+    
+    def first_statement_list(self):
+        return self.current_token.lexeme in {"{", "if", "return", "write", "read", "while"} or self.current_token.type == "identifier"
+
+    def first_relop(self):
+        return self.current_token.lexeme in {"==", "!=", ">", "<", "<=", "=>"}
+
     def Rat26s(self):
-        self.output_file.write(f"{'token':<15} {'lexeme'}\n")
-        self.output_file.write(f"{'-' * 15} {'-' * 20}\n")
         if self.show_productions:
             self.output_file.write("R1. <Rat26S> ::= @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @\n")
         self.match('@')
@@ -159,16 +172,16 @@ class parser:
     def opt_function_definitions(self):
         if self.show_productions:
             self.output_file.write("R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>\n")
-        if self.current_token.lexeme == "function":
+        if self.first_opt_function_definitions():
             self.function_definitions()
         else:
-            pass
+            self.empty()
     
     def function_definitions(self):
         if self.show_productions:
-            self.output_file.write("R3. <Function Definitions> ::= <Function> | <Function> <Function Definitions>\n")
+            self.output_file.write("R3. <Function Definitions> -> <Function> | <Function> <Function Definitions>\n")
         self.function()
-        if self.current_token.lexeme == "function":
+        if self.first_opt_function_definitions():
             self.function_definitions()
         
     def function(self):
@@ -185,11 +198,11 @@ class parser:
     def opt_parameter_list(self):
         if self.show_productions:
             self.output_file.write("R5. <Opt parameter List> ::= <Parameter List> | <Empty>\n")
-        if self.current_token.type == "identifier":
+        if self.first_opt_parameter_list():
             self.parameter_list()
         else:
-            pass
-        
+            self.empty()
+            
     def parameter_list(self):
         if self.show_productions:
             self.output_file.write("R6. <Parameter List> ::= <Parameter> | <Parameter> , <Parameter List>\n")
@@ -197,7 +210,7 @@ class parser:
         if self.current_token.lexeme == ',':
             self.match(',')
             self.parameter_list() 
-    
+
     def parameter(self):
         if self.show_productions:
             self.output_file.write("R7. <Parameter> ::= <IDS> <Qualifier>\n")
@@ -207,7 +220,7 @@ class parser:
     def qualifier(self):
         if self.show_productions:
             self.output_file.write("R8. <Qualifier> ::= integer | boolean | real\n")
-        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+        if self.first_qualifier():
             self.match(self.current_token.lexeme)
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Expected a type but got {self.current_token.type} {self.current_token.lexeme}")
@@ -222,17 +235,17 @@ class parser:
     def opt_declaration_list(self):
         if self.show_productions:
             self.output_file.write("R10. <Opt Declaration List> ::= <Declaration List> | <Empty>\n")
-        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+        if self.first_qualifier():
             self.declaration_list()
         else:
-            pass
+            self.empty()
         
     def declaration_list(self):
         if self.show_productions:
             self.output_file.write("R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>\n")
         self.declaration()
         self.match(';')
-        if self.current_token.lexeme in {"integer", "boolean", "real"}:
+        if self.first_qualifier():
             self.declaration_list()
         
     def declaration(self):
@@ -253,7 +266,7 @@ class parser:
         if self.show_productions:
             self.output_file.write("R14. <Statement List> ::= <Statement> | <Statement> <Statement List>\n")
         self.statement()
-        if self.current_token.lexeme in {"{", "if", "return", "write", "read", "while"} or self.current_token.type == "identifier":
+        if self.first_statement_list():
             self.statement_list()
             
     def statement(self):
@@ -290,7 +303,7 @@ class parser:
         self.match('=')
         self.expression()
         self.match(';')
-        
+
     def if_production(self):
         if self.show_productions:
             self.output_file.write("R18. <If> ::= if ( <Condition> ) <Statement> fi | if ( <Condition> ) <Statement> otherwise <Statement> fi\n")
@@ -313,7 +326,7 @@ class parser:
         else:
             self.expression()
             self.match(';')
-
+        
     def print_production(self):
         if self.show_productions:
             self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
@@ -351,7 +364,7 @@ class parser:
     def relop(self):
         if self.show_productions:
             self.output_file.write("R24. <Relop> ::= == | != | > | < | <= | =>\n")
-        if self.current_token.lexeme in {"==", "!=", ">", "<", "<=", "=>"}:
+        if self.first_relop():
             self.match(self.current_token.lexeme)
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Expected a relational operator but got {self.current_token.type} {self.current_token.lexeme}")
@@ -363,6 +376,8 @@ class parser:
         self.expression_prime()
         
     def expression_prime(self):
+        if self.show_productions:
+            self.output_file.write("R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>\n")
         if self.current_token.lexeme == '+':
             self.match('+')
             self.term()
@@ -372,15 +387,17 @@ class parser:
             self.term()
             self.expression_prime()
         else:
-            pass
+            self.empty()
         
     def term(self):
         if self.show_productions:
-            self.output_file.write("R26. <Term> ::= <Factor> <Term'>\n")
+            self.output_file.write("R27. <Term> ::= <Factor> <Term'>\n")
         self.factor()
         self.term_prime()
         
     def term_prime(self):
+        if self.show_productions:
+            self.output_file.write("R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>\n")
         if self.current_token.lexeme == '*':
             self.match('*')
             self.factor()
@@ -390,11 +407,11 @@ class parser:
             self.factor()
             self.term_prime()
         else:
-            pass
+            self.empty()
         
     def factor(self):
         if self.show_productions:
-            self.output_file.write("R27. <Factor> ::= - <Primary> | <Primary>\n")
+            self.output_file.write("R29. <Factor> ::= - <Primary> | <Primary>\n")
         if self.current_token.lexeme == '-':
             self.match('-')
             self.primary()
@@ -403,7 +420,7 @@ class parser:
         
     def primary(self):
         if self.show_productions:
-            self.output_file.write("R28. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+            self.output_file.write("R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
         if self.current_token.type == "identifier":
             self.match("identifier")
             if self.current_token.lexeme == '(':
@@ -420,7 +437,11 @@ class parser:
             self.match(')')
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Unexpected token {self.current_token.type} {self.current_token.lexeme} in primary")
-            
+        
+    def empty(self):
+        if self.show_productions:
+            self.output_file.write("R31. <Empty> ::= ε\n")
+        pass
 
 inputFile = input("Please enter the input Rat26S source code file: ")
 outputFile = input("Please enter the output destination: ")
