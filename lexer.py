@@ -312,7 +312,7 @@ class parser:
         self.condition()
         self.match(')')
         self.statement()
-        if self.current_token.lexeme == "otherwise":
+        if self.current_token.lexeme == "otherwise": # make into function
             self.match("otherwise")
             self.statement()
         self.match("fi")
