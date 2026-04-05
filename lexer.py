@@ -316,6 +316,9 @@ class parser:
             self.match("otherwise")
             self.statement()
         self.match("fi")
+        
+    def other_if(self):
+        if self.show_productions
             
     def return_production(self):
         if self.show_productions:
@@ -330,7 +333,7 @@ class parser:
     def print_production(self):
         if self.show_productions:
             self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
-        self.match("write")
+        self.match("write") 
         self.match('(')
         self.expression()
         self.match(')')
