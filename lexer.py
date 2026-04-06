@@ -333,16 +333,10 @@ class parser:
         self.match(')')
         self.statement()
         if self.current_token.lexeme == "otherwise":
-            if self.show_productions:
-                self.output_file.write("R26. <If> ::= if ( <Condition> ) <Statement> otherwise <Statement> fi\n")
             self.match("otherwise")
             self.statement()
-            self.match("fi")
-        else:
-            if self.show_productions:
-                self.output_file.write("R27. <If> ::= if ( <Condition> ) <Statement> fi\n")
-            self.match("fi")
-            
+        self.match("fi")
+
     def return_production(self):
         self.match("return")
         if self.current_token.lexeme == ";":
@@ -354,11 +348,11 @@ class parser:
                 self.output_file.write("R29. <Return> ::= return <Expression> ;\n")
             self.expression()
             self.match(';')
-        
+
     def print_production(self):
-        self.match("write") 
         if self.show_productions:
-            self.output_file.write("R30. <Print> ::= write ( <Expression> ) ;\n")
+            self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
+        self.match("write")
         self.match('(')
         self.expression()
         self.match(')')
