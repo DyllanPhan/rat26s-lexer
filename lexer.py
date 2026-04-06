@@ -312,14 +312,11 @@ class parser:
         self.condition()
         self.match(')')
         self.statement()
-        if self.current_token.lexeme == "otherwise": # make into function
+        if self.current_token.lexeme == "otherwise":
             self.match("otherwise")
             self.statement()
         self.match("fi")
-        
-    def other_if(self):
-        if self.show_productions
-            
+
     def return_production(self):
         if self.show_productions:
             self.output_file.write("R19. <Return> ::= return ; | return <Expression> ;\n")
@@ -329,11 +326,11 @@ class parser:
         else:
             self.expression()
             self.match(';')
-        
+
     def print_production(self):
         if self.show_productions:
             self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
-        self.match("write") 
+        self.match("write")
         self.match('(')
         self.expression()
         self.match(')')
