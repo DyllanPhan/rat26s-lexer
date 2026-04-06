@@ -2,7 +2,7 @@
 /* test2.rat */
 function add(x integer)
 {
-    return x
+    return x;
 }
 @
 integer a, b;
