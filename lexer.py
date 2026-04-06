@@ -254,15 +254,14 @@ class parser:
         
     def declaration_list(self):
         self.declaration()
+        self.match(';')
         if self.first_qualifier():
             if self.show_productions:
                 self.output_file.write("R16. <Declaration List> ::= <Declaration> ; <Declaration List>\n")
-            self.match(';')
             self.declaration_list()
         else:
             if self.show_productions:
                 self.output_file.write("R17. <Declaration List> ::= <Declaration> ;\n")
-            self.match(';')
         
     def declaration(self):
         self.qualifier()
@@ -351,7 +350,7 @@ class parser:
 
     def print_production(self):
         if self.show_productions:
-            self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
+            self.output_file.write("R30. <Print> ::= write ( <Expression> ) ;\n")
         self.match("write")
         self.match('(')
         self.expression()

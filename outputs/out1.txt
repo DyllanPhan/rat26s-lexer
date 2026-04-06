@@ -1,182 +1,182 @@
+Token: separator       Lexeme: @
 R1. <Rat26S> ::= @ <Opt Function Definitions> @ <Opt Declaration List> @ <Statement List> @
+R3. <Opt Function Definitions> ::= <Empty>
+R46. <Empty> ::= ε
 Token: separator       Lexeme: @
-R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>
-R31. <Empty> ::= ε
-Token: separator       Lexeme: @
-R10. <Opt Declaration List> ::= <Declaration List> | <Empty>
-R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>
-R12. <Declaration> ::= <Qualifier> <IDS>
-R8. <Qualifier> ::= integer | boolean | real
+R14. <Opt Declaration List> ::= <Declaration List>
+R12. <Qualifier> ::= integer | boolean | real
 Token: keyword         Lexeme: integer
-R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
+R18. <Declaration> ::= <Qualifier> <IDS>
 Token: identifier      Lexeme: a
+R19. <IDS> ::= <Identifier> , <IDS>
 Token: separator       Lexeme: ,
-R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
 Token: identifier      Lexeme: b
+R19. <IDS> ::= <Identifier> , <IDS>
 Token: separator       Lexeme: ,
-R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
 Token: identifier      Lexeme: c
+R19. <IDS> ::= <Identifier> , <IDS>
 Token: separator       Lexeme: ,
-R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>
 Token: identifier      Lexeme: d
+R20. <IDS> ::= <Identifier>
+R17. <Declaration List> ::= <Declaration> ;
 Token: separator       Lexeme: ;
 Token: separator       Lexeme: @
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: a
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: integer         Lexeme: 5
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: b
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: integer         Lexeme: 10
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: c
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: integer         Lexeme: 15
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R22. <While> ::= while ( <Condition> ) <Statement>
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: keyword         Lexeme: while
+R32. <While> ::= while ( <Condition> ) <Statement>
 Token: separator       Lexeme: (
-R23. <Condition> ::= <Expression> <Relop> <Expression>
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: a
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
-R24. <Relop> ::= == | != | > | < | <= | =>
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
+R33. <Condition> ::= <Expression> <Relop> <Expression>
+R34. <Relop> ::= == | != | > | < | <= | >=
 Token: operator        Lexeme: <
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: integer         Lexeme: 15
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: )
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R16. <Compound> ::= { <Statement List> }
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: separator       Lexeme: {
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R24. <Compound> ::= { <Statement List> }
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: a
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: a
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R36. <Expression'> ::= + <Term> <Expression'>
 Token: operator        Lexeme: +
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: integer         Lexeme: 1
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: d
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: b
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R40. <Term'> ::= * <Factor> <Term'>
 Token: operator        Lexeme: *
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: c
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
+R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: }
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R17. <Assign> ::= <Identifier> = <Expression> ;
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: c
+R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: d
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R36. <Expression'> ::= + <Term> <Expression'>
 Token: operator        Lexeme: +
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: a
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: ;
-R14. <Statement List> ::= <Statement> | <Statement> <Statement List>
-R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
-R20. <Print> ::= write ( <Expression> ) ;
+R21. <Statement List> ::= <Statement> <Statement List>
+R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
+R30. <Print> ::= write ( <Expression> ) ;
 Token: keyword         Lexeme: write
 Token: separator       Lexeme: (
-R25. <Expression> ::= <Term> <Expression'>
-R27. <Term> ::= <Factor> <Term'>
-R29. <Factor> ::= - <Primary> | <Primary>
-R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
 Token: identifier      Lexeme: c
-R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>
-R31. <Empty> ::= ε
-R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>
-R31. <Empty> ::= ε
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R44. <Factor> ::= <Primary>
+R42. <Term'> ::= <Empty>
+R46. <Empty> ::= ε
+R39. <Term> ::= <Factor> <Term'>
+R38. <Expression'> ::= <Empty>
+R46. <Empty> ::= ε
+R35. <Expression> ::= <Term> <Expression'>
 Token: separator       Lexeme: )
 Token: separator       Lexeme: ;
+R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: @
