@@ -170,23 +170,28 @@ class parser:
         self.match('@')
         
     def opt_function_definitions(self):
-        if self.show_productions:
-            self.output_file.write("R2. <Opt Function Definitions> ::= <Function Definitions> | <Empty>\n")
         if self.first_opt_function_definitions():
+            if self.show_productions:
+                self.output_file.write("R2. <Opt Function Definitions> ::= <Function Definitions>\n")
             self.function_definitions()
         else:
+            if self.show_productions:
+                self.output_file.write("R3. <Opt Function Definitions> ::= <Empty>\n")
             self.empty()
     
     def function_definitions(self):
-        if self.show_productions:
-            self.output_file.write("R3. <Function Definitions> -> <Function> | <Function> <Function Definitions>\n")
         self.function()
         if self.first_opt_function_definitions():
+            if self.show_productions:
+                self.output_file.write("R4. <Function Definitions> ::= <Function> <Function Definitions>\n")
             self.function_definitions()
+        else:
+            if self.show_productions:
+                self.output_file.write("R5. <Function Definitions> ::= <Function>\n")
         
     def function(self):
         if self.show_productions:
-            self.output_file.write("R4. <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>\n")
+            self.output_file.write("R6. <Function> ::= function <Identifier> ( <Opt Parameter List> ) <Opt Declaration List> <Body>\n")
         self.match("function")
         self.match("identifier")
         self.match('(')
@@ -196,30 +201,35 @@ class parser:
         self.body()
         
     def opt_parameter_list(self):
-        if self.show_productions:
-            self.output_file.write("R5. <Opt parameter List> ::= <Parameter List> | <Empty>\n")
         if self.first_opt_parameter_list():
+            if self.show_productions:
+                self.output_file.write("R7. <Opt parameter List> ::= <Parameter List>\n")
             self.parameter_list()
         else:
+            if self.show_productions:
+                self.output_file.write("R8. <Opt parameter List> ::= <Empty>\n")
             self.empty()
             
     def parameter_list(self):
-        if self.show_productions:
-            self.output_file.write("R6. <Parameter List> ::= <Parameter> | <Parameter> , <Parameter List>\n")
         self.parameter()
         if self.current_token.lexeme == ',':
+            if self.show_productions:
+                self.output_file.write("R9. <Parameter List> ::= <Parameter> , <Parameter List>\n")
             self.match(',')
             self.parameter_list() 
+        else:
+            if self.show_productions:
+                self.output_file.write("R10. <Parameter List> ::= <Parameter>\n")
 
     def parameter(self):
         if self.show_productions:
-            self.output_file.write("R7. <Parameter> ::= <IDS> <Qualifier>\n")
+            self.output_file.write("R11. <Parameter> ::= <IDS> <Qualifier>\n")
         self.ids()
         self.qualifier()
     
     def qualifier(self):
         if self.show_productions:
-            self.output_file.write("R8. <Qualifier> ::= integer | boolean | real\n")
+            self.output_file.write("R12. <Qualifier> ::= integer | boolean | real\n")
         if self.first_qualifier():
             self.match(self.current_token.lexeme)
         else:
@@ -227,51 +237,63 @@ class parser:
         
     def body(self):
         if self.show_productions:
-            self.output_file.write("R9. <Body> ::= { <Statement List> }\n")
+            self.output_file.write("R13. <Body> ::= { <Statement List> }\n")
         self.match('{')
         self.statement_list()
         self.match('}')
     
     def opt_declaration_list(self):
-        if self.show_productions:
-            self.output_file.write("R10. <Opt Declaration List> ::= <Declaration List> | <Empty>\n")
         if self.first_qualifier():
+            if self.show_productions:
+                self.output_file.write("R14. <Opt Declaration List> ::= <Declaration List>\n")
             self.declaration_list()
         else:
+            if self.show_productions:
+                self.output_file.write("R15. <Opt Declaration List> ::= <Empty>\n")
             self.empty()
         
     def declaration_list(self):
-        if self.show_productions:
-            self.output_file.write("R11. <Declaration List> ::= <Declaration> ; | <Declaration> ; <Declaration List>\n")
         self.declaration()
-        self.match(';')
         if self.first_qualifier():
+            if self.show_productions:
+                self.output_file.write("R16. <Declaration List> ::= <Declaration> ; <Declaration List>\n")
+            self.match(';')
             self.declaration_list()
+        else:
+            if self.show_productions:
+                self.output_file.write("R17. <Declaration List> ::= <Declaration> ;\n")
+            self.match(';')
         
     def declaration(self):
         if self.show_productions:
-            self.output_file.write("R12. <Declaration> ::= <Qualifier> <IDS>\n")
+            self.output_file.write("R18. <Declaration> ::= <Qualifier> <IDS>\n")
         self.qualifier()
         self.ids()
         
     def ids(self):
-        if self.show_productions:
-            self.output_file.write("R13. <IDS> ::= <Identifier> | <Identifier> , <IDS>\n")
         self.match("identifier")
         if self.current_token.lexeme ==',':
+            if self.show_productions:
+                self.output_file.write("R19. <IDS> ::= <Identifier> , <IDS>\n")
             self.match(',')
             self.ids()
+        else:
+            if self.show_productions:
+                self.output_file.write("R20. <IDS> ::= <Identifier>\n")
     
     def statement_list(self):
-        if self.show_productions:
-            self.output_file.write("R14. <Statement List> ::= <Statement> | <Statement> <Statement List>\n")
         self.statement()
         if self.first_statement_list():
+            if self.show_productions:
+                self.output_file.write("R21. <Statement List> ::= <Statement> <Statement List>\n")
             self.statement_list()
+        else:
+            if self.show_productions:
+                self.output_file.write("R22. <Statement List> ::= <Statement>\n")
             
     def statement(self):
         if self.show_productions:
-            self.output_file.write("R15. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>\n")
+            self.output_file.write("R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>\n")
         if self.current_token.lexeme == '{':
             self.compound()
         elif self.current_token.type == "identifier":
@@ -291,48 +313,51 @@ class parser:
 
     def compound(self):
         if self.show_productions:
-            self.output_file.write("R16. <Compound> ::= { <Statement List> }\n")
+            self.output_file.write("R24. <Compound> ::= { <Statement List> }\n")
         self.match('{')
         self.statement_list()
         self.match('}')
     
     def assign(self):
         if self.show_productions:
-            self.output_file.write("R17. <Assign> ::= <Identifier> = <Expression> ;\n")
+            self.output_file.write("R25. <Assign> ::= <Identifier> = <Expression> ;\n")
         self.match("identifier")
         self.match('=')
         self.expression()
         self.match(';')
 
     def if_production(self):
-        if self.show_productions:
-            self.output_file.write("R18. <If> ::= if ( <Condition> ) <Statement> fi | if ( <Condition> ) <Statement> otherwise <Statement> fi\n")
         self.match("if")
         self.match('(')
         self.condition()
         self.match(')')
         self.statement()
-        if self.current_token.lexeme == "otherwise": # make into function
+        if self.current_token.lexeme == "otherwise":
+            if self.show_productions:
+                self.output_file.write("R26. <If> ::= if ( <Condition> ) <Statement> otherwise <Statement> fi\n")
             self.match("otherwise")
             self.statement()
-        self.match("fi")
-        
-    def other_if(self):
-        if self.show_productions
+            self.match("fi")
+        else:
+            if self.show_productions:
+                self.output_file.write("R27. <If> ::= if ( <Condition> ) <Statement> fi\n")
+            self.match("fi")
             
     def return_production(self):
-        if self.show_productions:
-            self.output_file.write("R19. <Return> ::= return ; | return <Expression> ;\n")
         self.match("return")
-        if self.current_token.lexeme == ';':
+        if self.current_token.lexeme == ";":
+            if self.show_productions:
+                self.output_file.write("R28. <Return> ::= return ;\n")
             self.match(';')
         else:
+            if self.show_productions:
+                self.output_file.write("R29. <Return> ::= return <Expression> ;\n")
             self.expression()
             self.match(';')
         
     def print_production(self):
         if self.show_productions:
-            self.output_file.write("R20. <Print> ::= write ( <Expression> ) ;\n")
+            self.output_file.write("R30. <Print> ::= write ( <Expression> ) ;\n")
         self.match("write") 
         self.match('(')
         self.expression()
@@ -341,7 +366,7 @@ class parser:
 
     def scan_production(self):
         if self.show_productions:
-            self.output_file.write("R21. <Scan> ::= read ( <IDS> ) ;\n")
+            self.output_file.write("R31. <Scan> ::= read ( <IDS> ) ;\n")
         self.match("read")
         self.match('(')
         self.ids()
@@ -350,7 +375,7 @@ class parser:
         
     def while_production(self):
         if self.show_productions:
-            self.output_file.write("R22. <While> ::= while ( <Condition> ) <Statement>\n")
+            self.output_file.write("R32. <While> ::= while ( <Condition> ) <Statement>\n")
         self.match("while")
         self.match('(')
         self.condition()
@@ -359,14 +384,14 @@ class parser:
         
     def condition(self):
         if self.show_productions:
-            self.output_file.write("R23. <Condition> ::= <Expression> <Relop> <Expression>\n")
+            self.output_file.write("R33. <Condition> ::= <Expression> <Relop> <Expression>\n")
         self.expression()
         self.relop()
         self.expression()
         
     def relop(self):
         if self.show_productions:
-            self.output_file.write("R24. <Relop> ::= == | != | > | < | <= | =>\n")
+            self.output_file.write("R34. <Relop> ::= == | != | > | < | <= | >=\n")
         if self.first_relop():
             self.match(self.current_token.lexeme)
         else:
@@ -374,56 +399,66 @@ class parser:
 
     def expression(self):
         if self.show_productions:
-            self.output_file.write("R25. <Expression> ::= <Term> <Expression'>\n")
+            self.output_file.write("R35. <Expression> ::= <Term> <Expression'>\n")
         self.term()
         self.expression_prime()
         
     def expression_prime(self):
-        if self.show_productions:
-            self.output_file.write("R26. <Expression'> ::= + <Term> <Expression'> | - <Term> <Expression'> | <Empty>\n")
         if self.current_token.lexeme == '+':
+            if self.show_productions:
+                self.output_file.write("R36. <Expression'> ::= + <Term> <Expression'>\n")
             self.match('+')
             self.term()
             self.expression_prime()
         elif self.current_token.lexeme == '-':
+            if self.show_productions:
+                self.output_file.write("R37. <Expression'> ::= - <Term> <Expression'>\n")
             self.match('-')
             self.term()
             self.expression_prime()
         else:
+            if self.show_productions:
+                self.output_file.write("R38. <Expression'> ::= <Empty>\n")
             self.empty()
         
     def term(self):
         if self.show_productions:
-            self.output_file.write("R27. <Term> ::= <Factor> <Term'>\n")
+            self.output_file.write("R39. <Term> ::= <Factor> <Term'>\n")
         self.factor()
         self.term_prime()
         
     def term_prime(self):
-        if self.show_productions:
-            self.output_file.write("R28. <Term'> ::= * <Factor> <Term'> | / <Factor> <Term'> | <Empty>\n")
         if self.current_token.lexeme == '*':
+            if self.show_productions:
+                self.output_file.write("R40. <Term'> ::= * <Factor> <Term'>\n")
             self.match('*')
             self.factor()
             self.term_prime()
         elif self.current_token.lexeme == '/':
+            if self.show_productions:
+                self.output_file.write("R41. <Term'> ::= / <Factor> <Term'>\n")
             self.match('/')
             self.factor()
             self.term_prime()
         else:
+            if self.show_productions:
+                self.output_file.write("R42. <Term'> ::= <Empty>\n")
             self.empty()
         
     def factor(self):
-        if self.show_productions:
-            self.output_file.write("R29. <Factor> ::= - <Primary> | <Primary>\n")
         if self.current_token.lexeme == '-':
+            if self.show_productions:
+                self.output_file.write("R43. <Factor> ::= - <Primary>\n")
             self.match('-')
             self.primary()
         else:
+            if self.show_productions:
+                self.output_file.write("R44. <Factor> ::= <Primary>\n")
             self.primary()
         
     def primary(self):
         if self.show_productions:
-            self.output_file.write("R30. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+            self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
         if self.current_token.type == "identifier":
             self.match("identifier")
             if self.current_token.lexeme == '(':
@@ -443,7 +478,7 @@ class parser:
         
     def empty(self):
         if self.show_productions:
-            self.output_file.write("R31. <Empty> ::= ε\n")
+            self.output_file.write("R46. <Empty> ::= ε\n")
         pass
 
 inputFile = input("Please enter the input Rat26S source code file: ")
