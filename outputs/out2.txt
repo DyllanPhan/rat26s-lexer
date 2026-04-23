@@ -43,6 +43,7 @@ R19. <IDS> ::= <Identifier> , <IDS>
 Token: separator       Lexeme: ,
 Token: identifier      Lexeme: b
 R20. <IDS> ::= <Identifier>
+<<<<<<< Updated upstream
 Token: separator       Lexeme: ;
 R16. <Declaration List> ::= <Declaration> ; <Declaration List>
 R12. <Qualifier> ::= integer | boolean | real
@@ -274,3 +275,7 @@ R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: }
 R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: @
+=======
+R17. <Declaration List> ::= <Declaration> ;
+Token: separator       Lexeme: ;
+>>>>>>> Stashed changes
