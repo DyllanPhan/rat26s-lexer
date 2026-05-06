@@ -1,0 +1,30 @@
+@
+function convert (fahr integer)
+{
+    return 5*(fahr -32)/9;
+}
+
+function convertx (x real, y boolean)
+boolean  k, z;
+real     x;
+{ 
+    if (x > y) 
+       x = false;
+    fi
+    if ( y  != z) 
+       x = true;
+    otherwise y = 123.45;
+    fi
+    return;
+}
+@
+     integer    low, high, step;
+@
+     read (low, high, step);
+     while (low  <=  high)
+        {  write (convertx(low) );
+           low = low + step;
+        } 
+      
+@
+

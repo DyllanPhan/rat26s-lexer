@@ -143,6 +143,8 @@ class parser:
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Expected {token} but got {self.current_token.type} {self.current_token.lexeme}")
         
+    
+    
     def first_opt_function_definitions(self):
         return self.current_token.lexeme == "function"
     
