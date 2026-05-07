@@ -1,12 +1,26 @@
 @
-function multiply(a integer, b integer)
-integer c;
-{
-    c = a * b;
-}
+/* No Function Definitions */
 /* This is test number 3 */
 @
+integer a, b, c, d, e;
 @
-write(c);
+a = 3;
+b = 4;
+c = 5;
+d = 6;
+e = 7;
+
+while (a < 8)
+{
+    a = a + 1;
+}
+
+if (a < e)
+{
+    e = a + d;
+}
+fi
+
+write(e);
 read(a, b);
 @

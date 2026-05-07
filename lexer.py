@@ -5,8 +5,8 @@ class Token:
         self.line = line
 
 KEYWORDS = {
-    "integer", "boolean", "real",
-    "function", "if", "otherwise", "fi",
+    "integer", "boolean", "function", 
+    "if", "otherwise", "fi",
     "while", "return", "read", "write",
     "true", "false",
 }
@@ -14,6 +14,27 @@ KEYWORDS = {
 SEPARATORS = {"(", ")", "{", "}", ",", ";", "@"}
 OPERATORS = {"==", "!=", "<=", "=>", ">", "<", "=", "+", "-", "*", "/"}
 WHITESPACE = {" ", "\t", "\n", "\r"}
+Memory_Aress = 10000
+Sym_Table = []
+
+def insertsym(lexeme, type):
+    global Memory_Aress
+    if checksym(lexeme) is not None:
+        raise SyntaxError(f"Semantic Error: lexeme {lexeme} has already been declared")
+    Sym_Table.append((lexeme, Memory_Aress, type))
+    Memory_Aress += 1
+
+def checksym(lexeme):
+    for variable in Sym_Table:
+        if variable[0] == lexeme:
+            return variable
+    return None
+
+def printtable(output_file):
+    output_file.write("\nIdentifier       Memory Address       Type\n")
+    output_file.write("---------------------------------------------\n")
+    for variable in Sym_Table:
+        output_file.write (f"{variable[0]: <15} {variable[1]: <15} {variable[2]: <15}\n")
 
 class Lexer:
     def __init__(self, text: str):
@@ -152,7 +173,7 @@ class parser:
         return self.current_token.type == "identifier"
 
     def first_qualifier(self):
-        return self.current_token.lexeme in {"integer", "boolean", "real"}
+        return self.current_token.lexeme in {"integer", "boolean"}
     
     def first_statement_list(self):
         return self.current_token.lexeme in {"{", "if", "return", "write", "read", "while"} or self.current_token.type == "identifier"
@@ -233,7 +254,9 @@ class parser:
         if self.show_productions:
             self.output_file.write("R12. <Qualifier> ::= integer | boolean | real\n")
         if self.first_qualifier():
-            self.match(self.current_token.lexeme)
+            type = self.current_token.lexeme
+            self.match(type)
+            return type
         else:
             raise SyntaxError(f"Line {self.current_token.line}: Expected a type but got {self.current_token.type} {self.current_token.lexeme}")
         
@@ -266,18 +289,22 @@ class parser:
                 self.output_file.write("R17. <Declaration List> ::= <Declaration> ;\n")
         
     def declaration(self):
-        self.qualifier()
+        type = self.qualifier()
         if self.show_productions:
             self.output_file.write("R18. <Declaration> ::= <Qualifier> <IDS>\n")
-        self.ids()
+        self.ids(type)
         
-    def ids(self):
+    def ids(self, type=None):
+        lexeme = self.current_token.lexeme
+        if type is not None:
+            insertsym(lexeme, type)
+        
         self.match("identifier")
         if self.current_token.lexeme ==',':
             if self.show_productions:
                 self.output_file.write("R19. <IDS> ::= <Identifier> , <IDS>\n")
             self.match(',')
-            self.ids()
+            self.ids(type)
         else:
             if self.show_productions:
                 self.output_file.write("R20. <IDS> ::= <Identifier>\n")
@@ -490,4 +517,5 @@ outputFile = input("Please enter the output destination: ")
 with open(outputFile, "w") as output:
     parse = parser(Lexer(open(inputFile, "r").read()), output, show_productions=True)
     parse.Rat26s()
+    printtable(output)
 print("Done.")

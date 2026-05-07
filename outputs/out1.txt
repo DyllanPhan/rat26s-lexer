@@ -18,8 +18,8 @@ R19. <IDS> ::= <Identifier> , <IDS>
 Token: separator       Lexeme: ,
 Token: identifier      Lexeme: d
 R20. <IDS> ::= <Identifier>
-R17. <Declaration List> ::= <Declaration> ;
 Token: separator       Lexeme: ;
+R17. <Declaration List> ::= <Declaration> ;
 Token: separator       Lexeme: @
 R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> | <While>
 Token: identifier      Lexeme: a
@@ -180,3 +180,10 @@ Token: separator       Lexeme: )
 Token: separator       Lexeme: ;
 R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: @
+
+Identifier       Memory Address       Type
+---------------------------------------------
+a               10000           integer        
+b               10001           integer        
+c               10002           integer        
+d               10003           integer        

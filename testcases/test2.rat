@@ -1,12 +1,8 @@
 @
 /* test2.rat */
-function add(x integer)
-{
-    return x;
-}
+/* No Function Definitions */
 @
-integer a, b;
-real c;
+integer a, b, c;
 @
 a = 1;
 b = 2;
