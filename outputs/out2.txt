@@ -23,7 +23,7 @@ Token: identifier      Lexeme: a
 R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
 Token: integer         Lexeme: 1
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -38,7 +38,7 @@ Token: identifier      Lexeme: b
 R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
 Token: integer         Lexeme: 2
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -53,7 +53,7 @@ Token: identifier      Lexeme: c
 R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
 Token: identifier      Lexeme: a
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -61,7 +61,7 @@ R39. <Term> ::= <Factor> <Term'>
 R36. <Expression'> ::= + <Term> <Expression'>
 Token: operator        Lexeme: +
 Token: identifier      Lexeme: b
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -76,7 +76,7 @@ Token: identifier      Lexeme: b
 R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
 Token: identifier      Lexeme: a
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -84,7 +84,7 @@ R39. <Term> ::= <Factor> <Term'>
 R36. <Expression'> ::= + <Term> <Expression'>
 Token: operator        Lexeme: +
 Token: identifier      Lexeme: c
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -99,7 +99,7 @@ R30. <Print> ::= write ( <Expression> ) ;
 Token: keyword         Lexeme: write
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: a
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -115,7 +115,7 @@ R30. <Print> ::= write ( <Expression> ) ;
 Token: keyword         Lexeme: write
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: b
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -131,7 +131,7 @@ R30. <Print> ::= write ( <Expression> ) ;
 Token: keyword         Lexeme: write
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: c
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -146,7 +146,7 @@ R23. <Statement> ::= <Compound> | <Assign> | <If> | <Return> | <Print> | <Scan> 
 Token: keyword         Lexeme: if
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: a
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -158,7 +158,7 @@ R33. <Condition> ::= <Expression> <Relop> <Expression>
 R34. <Relop> ::= == | != | > | < | <= | >=
 Token: operator        Lexeme: ==
 Token: identifier      Lexeme: b
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -172,7 +172,7 @@ R30. <Print> ::= write ( <Expression> ) ;
 Token: keyword         Lexeme: write
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: c
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -189,7 +189,7 @@ Token: keyword         Lexeme: while
 R32. <While> ::= while ( <Condition> ) <Statement>
 Token: separator       Lexeme: (
 Token: identifier      Lexeme: c
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -201,7 +201,7 @@ R33. <Condition> ::= <Expression> <Relop> <Expression>
 R34. <Relop> ::= == | != | > | < | <= | >=
 Token: operator        Lexeme: <
 Token: integer         Lexeme: 10
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -218,7 +218,7 @@ Token: identifier      Lexeme: c
 R25. <Assign> ::= <Identifier> = <Expression> ;
 Token: operator        Lexeme: =
 Token: identifier      Lexeme: c
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -226,7 +226,7 @@ R39. <Term> ::= <Factor> <Term'>
 R36. <Expression'> ::= + <Term> <Expression'>
 Token: operator        Lexeme: +
 Token: integer         Lexeme: 1
-R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false
+R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false
 R44. <Factor> ::= <Primary>
 R42. <Term'> ::= <Empty>
 R46. <Empty> ::= ε
@@ -239,7 +239,42 @@ R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: }
 R22. <Statement List> ::= <Statement>
 Token: separator       Lexeme: @
-Symbol Table:
+
+1: PUSHI 1
+2: POPM 10000
+3: PUSHI 2
+4: POPM 10001
+5: PUSHM 10000
+6: PUSHM 10001
+7: A
+8: POPM 10002
+9: PUSHM 10000
+10: PUSHM 10002
+11: A
+12: POPM 10001
+13: PUSHM 10000
+14: SOUT
+15: PUSHM 10001
+16: SOUT
+17: PUSHM 10002
+18: SOUT
+19: PUSHM 10000
+20: PUSHM 10001
+21: EQU
+22: JMPZ 25
+23: PUSHM 10002
+24: SOUT
+25: LABEL
+26: PUSHM 10002
+27: PUSHI 10
+28: LES
+29: JMPZ 35
+30: PUSHM 10002
+31: PUSHI 1
+32: A
+33: POPM 10002
+34: JMP 25
+
 Identifier       Memory Address       Type
 ---------------------------------------------
 a               10000           integer        

@@ -17,6 +17,27 @@ WHITESPACE = {" ", "\t", "\n", "\r"}
 Memory_Aress = 10000
 Sym_Table = []
 
+instr_table = [] 
+instr_address = 1
+jmp_stack = []
+
+def generate_instruction(op, oprnd=None):
+    global instr_address
+    instr_table.append([instr_address, op, oprnd])
+    instr_address += 1
+
+def printassembly(output_file):
+    output_file.write("\n")
+    for i in instr_table:
+        if i[2] is not None:
+            output_file.write(f"{i[0]}: {i[1]} {i[2]}\n")
+        else:
+            output_file.write(f"{i[0]}: {i[1]}\n")
+
+def back_patch(JMP_address):
+    addr = jmp_stack.pop()
+    instr_table[addr - 1][2] = JMP_address
+
 def insertsym(lexeme, type):
     global Memory_Aress
     if checksym(lexeme) is not None:
@@ -194,9 +215,7 @@ class parser:
         
     def opt_function_definitions(self):
         if self.first_opt_function_definitions():
-            if self.show_productions:
-                self.output_file.write("R2. <Opt Function Definitions> ::= <Function Definitions>\n")
-            self.function_definitions()
+            raise SyntaxError(f"Line {self.current_token.line}: Function definitions not in simplified Rat26s grammar")
         else:
             if self.show_productions:
                 self.output_file.write("R3. <Opt Function Definitions> ::= <Empty>\n")
@@ -347,11 +366,13 @@ class parser:
         self.match('}')
     
     def assign(self):
+        id = self.current_token.lexeme
         self.match("identifier")
         if self.show_productions:
             self.output_file.write("R25. <Assign> ::= <Identifier> = <Expression> ;\n")
         self.match('=')
         self.expression()
+        generate_instruction("POPM", checksym(id)[1])
         self.match(';')
 
     def if_production(self):
@@ -363,6 +384,7 @@ class parser:
         if self.current_token.lexeme == "otherwise":
             self.match("otherwise")
             self.statement()
+        back_patch(instr_address)
         self.match("fi")
 
     def return_production(self):
@@ -383,6 +405,7 @@ class parser:
         self.match("write")
         self.match('(')
         self.expression()
+        generate_instruction("SOUT", None)
         self.match(')')
         self.match(';')
 
@@ -390,8 +413,12 @@ class parser:
         self.match("read")
         if self.show_productions:
             self.output_file.write("R31. <Scan> ::= read ( <IDS> ) ;\n")
+        id = self.current_token.lexeme
         self.match('(')
+        id = self.current_token.lexeme
         self.ids()
+        generate_instruction("SIN")
+        generate_instruction("POPM", checksym(id)[1])
         self.match(')')
         self.match(';')
         
@@ -399,17 +426,26 @@ class parser:
         self.match("while")
         if self.show_productions:
             self.output_file.write("R32. <While> ::= while ( <Condition> ) <Statement>\n")
+        Ar = instr_address
+        generate_instruction("LABEL", None)
         self.match('(')
         self.condition()
         self.match(')')
         self.statement()
+        generate_instruction("JMP", Ar)
+        back_patch(instr_address)
         
     def condition(self):
         self.expression()
         if self.show_productions:
             self.output_file.write("R33. <Condition> ::= <Expression> <Relop> <Expression>\n")
+        op = self.current_token.lexeme
         self.relop()
         self.expression()
+        ops = {"<": "LES", ">": "GRT", "==": "EQU", "!=": "NEW", "<=": "LEQ", ">=": "GEQ"}
+        generate_instruction(ops[op])
+        jmp_stack.append(instr_address)
+        generate_instruction("JMPZ", None)
         
     def relop(self):
         if self.show_productions:
@@ -432,12 +468,14 @@ class parser:
                 self.output_file.write("R36. <Expression'> ::= + <Term> <Expression'>\n")
             self.match('+')
             self.term()
+            generate_instruction("A", None)
             self.expression_prime()
         elif self.current_token.lexeme == '-':
             if self.show_productions:
                 self.output_file.write("R37. <Expression'> ::= - <Term> <Expression'>\n")
             self.match('-')
             self.term()
+            generate_instruction("S", None)
             self.expression_prime()
         else:
             if self.show_productions:
@@ -457,12 +495,14 @@ class parser:
                 self.output_file.write("R40. <Term'> ::= * <Factor> <Term'>\n")
             self.match('*')
             self.factor()
+            generate_instruction("M", None)
             self.term_prime()
         elif self.current_token.lexeme == '/':
             if self.show_productions:
                 self.output_file.write("R41. <Term'> ::= / <Factor> <Term'>\n")
             self.match('/')
             self.factor()
+            generate_instruction("D", None)
             self.term_prime()
         else:
             if self.show_productions:
@@ -483,25 +523,29 @@ class parser:
         
     def primary(self):
         if self.current_token.type == "identifier":
+            id = self.current_token.lexeme
             self.match("identifier")
             if self.show_productions:
-                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false\n")
+            generate_instruction("PUSHM", checksym(id)[1])
             if self.current_token.lexeme == '(':
                 self.match('(')
                 self.ids()
                 self.match(')')
-        elif self.current_token.type in {"integer", "real"}:
+        elif self.current_token.type in {"integer"}:
+            id = self.current_token.lexeme
             self.match(self.current_token.type)
             if self.show_productions:
-                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false\n")
+            generate_instruction("PUSHI", int(id))
         elif self.current_token.lexeme in {"true", "false"}:
             self.match(self.current_token.lexeme)
             if self.show_productions:
-                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false\n")
         elif self.current_token.lexeme == '(':
             self.match('(')
             if self.show_productions:
-                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | <Real> | true | false\n")
+                self.output_file.write("R45. <Primary> ::= <Identifier> | <Integer> | <Identifier> ( <IDS> ) | ( <Expression> ) | true | false\n")
             self.expression()
             self.match(')')
         else:
@@ -517,5 +561,6 @@ outputFile = input("Please enter the output destination: ")
 with open(outputFile, "w") as output:
     parse = parser(Lexer(open(inputFile, "r").read()), output, show_productions=True)
     parse.Rat26s()
+    printassembly(output)
     printtable(output)
 print("Done.")

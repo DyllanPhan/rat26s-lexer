@@ -1,5 +1,12 @@
 {
     "cSpell.words": [
-        "Relop"
+        "JMPZ",
+        "oprnd",
+        "POPM",
+        "printassembly",
+        "PUSHI",
+        "PUSHM",
+        "Relop",
+        "SOUT"
     ]
 }
